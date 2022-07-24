@@ -1,0 +1,69 @@
+from selenium import webdriver
+from time import sleep
+from PIL import Image
+
+@BeforeTest
+# Step a
+driver = webdriver.Chrome()
+driver.get("https://www.google.com/maps/")
+sleep(2)
+
+@Test
+# Step b
+Place = driver.find_element_by_class_name("tactile-searchbox-input")   
+Place.send_keys("Wankhede Stadium")
+search_button = driver.find_element_by_id("searchbox-searchbutton")  
+search_button.click()
+
+# Step c
+driver.save_screenshot("ss1.png")
+
+# Step d
+try:
+    driver.find_element_by_xpath("/html/body/div[3]/div[9]/div[9]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]/div[1]/div[1]/h1/span[1]")
+except NoSuchElementException:
+    print("Stadium not Found")
+print("Stadium Found")
+
+# Step e
+String Actual = driver.title();
+String Expected = “Wankhede Stadium - Google Maps”
+if (Actual.equals(Expected)) {
+                   print("Test Passed");
+        }
+ else {
+                   print("Test Failed");
+        }
+
+# Step f
+String rating = driver.find_element_by_xpath("/html/body/div[3]/div[9]/div[9]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]/div[1]/div[2]/div/div[1]/div[2]/span/span/span[1]").text
+print(rating)
+String reviews = driver.find_element_by_xpath("/html/body/div[3]/div[9]/div[9]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]/div[1]/div[2]/div/div[1]/span[1]/span/span/span[2]/span[1]/button").text
+print(reviews)
+
+# Step g
+try:
+    driver.find_element_by_xpath("/html/body/div[3]/div[9]/div[9]/div/div/div[1]/div[2]/div/div[1]/div/div/div[7]/div[5]/a/div[1]/div[2]/div[1]")
+except NoSuchElementException:
+    print("mumbaicricket.com link not Found")
+print("mumbaicricket.com link Found")
+
+# Step h
+String address = driver.find_element_by_xpath("/html/body/div[3]/div[9]/div[9]/div/div/div[1]/div[2]/div/div[1]/div/div/div[7]/div[3]/button/div[1]/div[2]/div[1]").text
+print(address)
+
+# Step i
+String actual_phone_no = driver.find_element_by_xpath("/html/body/div[3]/div[9]/div[9]/div/div/div[1]/div[2]/div/div[1]/div/div/div[7]/div[6]/button/div[1]/div[2]/div[1]").text
+String expected_phone_no = "022 2279 5500"
+if (actual_phone_no.equals(expected_phone_no)) {
+                   print("Phone number Test Passed");
+        } else {
+                   print("Phone number Test Failed");
+        }
+
+# Step j
+driver.save_screenshot("ss2.png")
+
+
+@AfterTest
+driver.close()

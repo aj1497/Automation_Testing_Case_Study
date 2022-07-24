@@ -1,0 +1,62 @@
+from selenium import webdriver
+from time import sleep
+from PIL import Image
+
+@BeforeTest
+driver = webdriver.Firefox()
+driver.get("http://www.allmovie.com/")
+sleep(2)
+Movie = driver.find_element_by_class_name("site-search-input")   
+Movie.send_keys("The Godfather")
+search_button = driver.find_element_by_class_name("site-search-button")  
+search_button.click()
+
+@Test
+# Step a
+Search_items = driver.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/h1")
+print(Search_items)
+
+# Step b
+driver.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/ul/li[1]/div[2]/div[1]/a").click()
+
+# Step c
+String Actual_Genre = driver.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/header/div/span[1]/a").text
+String Expected_Genre = “Crime”
+if (Actual_Genre.equals(Expected_Genre)) {
+                   print("Genre Test Passed");
+        } 
+else {
+                   print("Genre Test Failed");
+        }
+String Actual_Rating = driver.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/header/div/span[1]/text()[2]").text
+String Expected_Rating = “A”
+if (Actual_Rating.equals(Expected_Rating)) {
+                   print("Rating Test Passed");
+        } 
+else {
+                   print("Rating Test Failed");
+        }
+
+# Step d
+driver.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/ul/li[4]/a").click()
+String Actual_Director = driver.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/section/div[1]/div[1]/div[2]/dl/dt/a").text
+String Expected_Director = “Francis Ford Coppola”
+if (Actual_Director.equals(Expected_Director)) {
+                   print("Director Test Passed");
+        } 
+else {
+                   print("Director Test Failed");
+        }
+
+# Step e
+String Actual_Character_Name = driver.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/section/div[2]/div[2]/div[3]").text
+String Expected_Character_Name = “Michael Corleone”
+if (Actual_Character_Name.equals(Expected_Character_Name)) {
+                   print("Character Name Test Passed");
+        } 
+else {
+                   print("Character Name Test Failed");
+        }
+
+@AfterTest
+driver.close()

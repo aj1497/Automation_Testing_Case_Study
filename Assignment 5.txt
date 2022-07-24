@@ -1,0 +1,46 @@
+from selenium import webdriver
+from time import sleep
+from PIL import Image
+
+@BeforeTest
+driver = webdriver.Chrome()
+driver.get("https://redbus.in/")
+sleep(2)
+
+@Test
+# Step a
+Source = driver.find_element_by_id("src")   
+Source.send_keys("Mumbai")
+Destination = driver.find_element_by_id("dest")   
+Destination.send_keys("Pune")
+Date = driver.find_element_by_id("onward_cal")   
+Date.send_keys("24-Jul-2022")
+driver.find_element_by_id("search_btn").click()
+
+# Step b & c
+FileInputStream fis = new FileInputStream("D:\\Test.xlsx")
+rows = driver.find_element_by_xpath("/html/body/section/div[2]/div[2]/div/div[2]/div[2]/div[2]/div[1]/span[1]/span/text()[1]").text
+for i in in range(1, rows+1):
+ Rating = driver.find_element_by_xpath("/html/body/section/div[2]/div[2]/div/div[2]/div[2]/div[3]/div[2]/ul/div[i]/li/div/div[1]/div[1]/div[5]/div[1]/div/span").text
+ if rating > 4:
+  XSSFSheet sheet = workbook.getSheet("Sheet1")
+  Row row = sheet.createRow(1)
+  Cell cell = row.createCell(1)
+  cell.setCellType(cell.CELL_TYPE_STRING)
+  cell.setCellValue(driver.find_element_by_xpath("/html/body/section/div[2]/div[2]/div/div[2]/div[2]/div[3]/div[2]/ul/div[i]/li/div/div[1]/div[1]/div[1]/div[1]").text
+  FileOutputStream fos = new FileOutputStream("D:\\Test.xlsx")
+  workbook.write(fos);
+  fos.close();
+  
+ else:
+  XSSFSheet sheet = workbook.getSheet("Sheet2")
+  Row row = sheet.createRow(1)
+  Cell cell = row.createCell(1)
+  cell.setCellType(cell.CELL_TYPE_STRING)
+  cell.setCellValue(driver.find_element_by_xpath("/html/body/section/div[2]/div[2]/div/div[2]/div[2]/div[3]/div[2]/ul/div[i]/li/div/div[1]/div[1]/div[1]/div[1]").text
+  FileOutputStream fos = new FileOutputStream("D:\\Test.xlsx")
+  workbook.write(fos);
+  fos.close();
+   
+@AfterTest
+driver.close()
